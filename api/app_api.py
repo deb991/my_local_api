@@ -47,4 +47,4 @@ def books_id():
     return jsonify(results)
 
 
-app.run()
+app.run(debug=True)

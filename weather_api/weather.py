@@ -60,6 +60,14 @@ def get_weather_data(query_url):
     except json.JSONDecodeError:
         sys.exit("Can't read Server response:=>>")
 
+def weather_info_display(weather_data, imperial=False):
+    city = weather_data['name']
+    weather_desc = weather_data['weather'][0]['description']
+    temp = weather_data['main']['temp']
+    print(f"{city}", end="")
+    print(f"\t{weather_desc.capitalize()}", end=" ")
+    print(f"({temp}°{'F' if imperial else 'C'})")
+
 
 if __name__ == '__main__':
     user_args = read_usr_cli_args()
@@ -67,8 +75,4 @@ if __name__ == '__main__':
     query_url = build_weather_url(user_args.City, user_args.imperial)
     weather_data = get_weather_data(query_url)
     #pp(weather_data)
-    print(
-        f"{weather_data['name']}: "
-        f"{weather_data['weather'][0]['description']} "
-        f"({weather_data['main']['temp']})"
-    )
+    weather_info_display(weather_data, user_args.imperial)
